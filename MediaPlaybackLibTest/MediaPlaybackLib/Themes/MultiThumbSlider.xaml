@@ -1,0 +1,219 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+                    xmlns:local="clr-namespace:MediaPlaybackLib"
+                    xmlns:control="clr-namespace:MediaPlaybackLib.MultiThumbSlider"
+                    xmlns:adorners="clr-namespace:MediaPlaybackLib.MultiThumbSlider.Adorners">
+
+    <!-- MarkerThumb Editor adorner -->
+    <DataTemplate x:Key="MarkerThumbEditor">
+        <Grid Name="container" SnapsToDevicePixels="True" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0,1">
+            <Grid.RenderTransform>
+                <ScaleTransform ScaleX="1" ScaleY="1"/>
+            </Grid.RenderTransform>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <UIElement.Effect>
+                    <DropShadowEffect Opacity="0.8" />
+                </UIElement.Effect>
+                <Border Background="{DynamicResource ContainerBackground}" BorderThickness="1" BorderBrush="{DynamicResource ContainerBorderBrush}" CornerRadius="4"/>
+
+                <Path Grid.Row="1" Width="14" Height="12" Margin="6,-1.7,0,0" Stroke="{DynamicResource ContainerBorderBrush}" StrokeThickness="1" Stretch="Fill" 
+                          Fill="{DynamicResource ContainerBackground}" Data="M 0,0L 0,8L 8,0" HorizontalAlignment="Left"/>
+            </Grid>
+
+            <StackPanel FocusManager.IsFocusScope="True" FocusManager.FocusedElement="{Binding ElementName=editDescription}" Margin="5,1,5,19">
+                <!-- Text block to display the Name of the marker -->
+                <TextBlock HorizontalAlignment="Left" Text="{Binding DisplayName}" Foreground="{DynamicResource TextBrush}"/>
+
+                <!-- Text Box for description text editing -->
+                <TextBox VerticalAlignment="Center" FontSize="12" x:Name="editDescription" Margin="0,4"
+                             Text="{Binding Description, Mode=TwoWay, NotifyOnSourceUpdated=True,  UpdateSourceTrigger=PropertyChanged}"
+                             Background="{DynamicResource ContentBackground}" Foreground="{DynamicResource ValueTextBrush}" BorderBrush="{DynamicResource ContentBorderBrush}">
+                    <TextBox.InputBindings>
+                        <KeyBinding Command="{Binding ModifyRequestCommand}" Key="Enter" />
+                    </TextBox.InputBindings>
+                </TextBox>
+
+                <DockPanel LastChildFill="False">
+                    <!-- add the delete button to the bottom left . Command is bound to MarkerThumb.DeleteCommand-->
+                    <Button Name="DeleteBtn" Command="{Binding DeleteCommand}" Width="16" Height="16" DockPanel.Dock="Left" Focusable="false" Cursor="Hand" ToolTip="{x:Static local:Res.Delete}">
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Foreground" Value="{DynamicResource MediaHighlightBrush}" />
+                                    </Trigger>
+                                    <Trigger Property="IsMouseOver" Value="False">
+                                        <Setter Property="Foreground" Value="{DynamicResource GlyphBrush}" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                                <Grid Background="Transparent">
+                                    <Path Data="{DynamicResource MinusInCircleGeometry}" Stretch="Uniform" Fill="{Binding RelativeSource={RelativeSource AncestorType={x:Type ButtonBase}}, Path=Foreground}" />
+                                </Grid>
+                            </ControlTemplate>
+                        </Button.Template>
+
+                    </Button>
+
+                    <!-- save button on the bottom right . Command is bound to MarkerThumb.ModifyRequestCommand-->
+                    <Button Name="SaveBtn" DockPanel.Dock="Right" Command="{Binding ModifyRequestCommand}" Width="16" Height="16" Focusable="false" HorizontalAlignment="Right" Cursor="Hand" ToolTip="{x:Static local:Res.Apply}">
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Foreground" Value="{DynamicResource MediaHighlightBrush}" />
+                                    </Trigger>
+                                    <Trigger Property="IsMouseOver" Value="False">
+                                        <Setter Property="Foreground" Value="{DynamicResource GlyphBrush}" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                                <Grid Background="Transparent">
+                                    <Path Data="{DynamicResource CheckMarkInCircleGeometry}"  Stretch="Uniform" Fill="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}, Path=Foreground}" />
+                                </Grid>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <!-- add the close button to the top right. Command is bound to MarkerThumb.CloseEditCommand -->
+                    <Button Name="CloseBtn" Command="{Binding CloseEditCommand}" Width="16" Height="16" Focusable="false" DockPanel.Dock="Right" Cursor="Hand" HorizontalAlignment="Right" ToolTip="{x:Static local:Res.Cancel}" Margin="0,0,4,0">
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Foreground" Value="{DynamicResource MediaHighlightBrush}" />
+                                    </Trigger>
+                                    <Trigger Property="IsMouseOver" Value="False">
+                                        <Setter Property="Foreground" Value="{DynamicResource GlyphBrush}" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                                <Grid Background="Transparent">
+                                    <Path Data="{DynamicResource CrossMarkInCircleGeometry}"  Stretch="Uniform" Fill="{Binding RelativeSource={RelativeSource AncestorType={x:Type ButtonBase}}, Path=Foreground}" />
+                                </Grid>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </DockPanel>
+            </StackPanel>
+        </Grid>
+    </DataTemplate>
+
+    <Style TargetType="{x:Type control:MarkerThumb}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Height" Value="15" />
+        <Setter Property="Cursor" Value="SizeWE"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type control:MarkerThumb}">
+                    <!-- We set the DataContext of the AdornerDecorator to force it to the MarkerThumb and not a higher level control-->
+                    <AdornerDecorator DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type control:MarkerThumb}}}">
+                        <!-- Must set the FocusScope otherwise the adorner focus for popup and being able to edit doesn't work-->
+                        <Grid FocusManager.IsFocusScope="True" >
+
+                            <!-- Path of the actual thumb, note is must be focusable -->
+                            <Path Name="PART_Grip" Fill="{DynamicResource MediaMarkersSolidBrush}" Data="M -5.0,0.0 L 5.0,0 L 5.0,5.0 L 0,10.0 L -5.0,5 L -5.0,0" Focusable="True" IsEnabled="True">
+                                <UIElement.Effect>
+                                    <DropShadowEffect ShadowDepth="2" BlurRadius="5"/>
+                                </UIElement.Effect>
+                            </Path>
+                        </Grid>
+
+                        <!-- Add the required adorner behavior-->
+                        <i:Interaction.Behaviors>
+                            <adorners:ContentTemplateAdornerBehavior x:Name="PART_AdornerBehavior" AdornerTemplate="{StaticResource MarkerThumbEditor}"
+                                                       DelayConstruction="True" AdornerMargin="-11 -82 0 0" Placement="VerticalInnerHorizontalInner" >
+                            </adorners:ContentTemplateAdornerBehavior >
+                        </i:Interaction.Behaviors>
+                    </AdornerDecorator>
+
+                    <!-- Triggers to change the brush color of the thumb depending on the IsReadOnly property-->
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSystem}" Value="True">
+                            <Setter TargetName="PART_Grip" Property="Fill" Value="{DynamicResource MediaMarkersReadOnlySolidBrush}" />
+                            <Setter Property="Cursor" Value="Arrow" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsFrozen}" Value="True">
+                            <Setter Property="Cursor" Value="Arrow" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type Thumb}" x:Key="LeftRangeThumb">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <!-- Path of the actual thumb, note is must be focusable -->
+                    <Path Name="PART_LeftGrip" Fill="{DynamicResource MediaMarkersRangeBrush}" Margin="5 0 0 0" Data="M 0,0.0 L -5.0,0 L -5.0,13.0 L 0,18.0 L 0,13 L 0,0" Focusable="False" IsEnabled="True"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type Thumb}" x:Key="CenterRangeThumb">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Rectangle Name="PART_CenterGrip" Fill="{DynamicResource MediaMarkersRangeBrush}" Focusable="False" IsEnabled="True" Height="4" Margin="0 0 0 14"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type Thumb}" x:Key="RightRangeThumb">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <!-- Path of the actual thumb, note is must be focusable -->
+                    <Path Name="PART_RightGrip" Fill="{DynamicResource MediaMarkersRangeBrush}" Margin="0 0 0 0" Data="M 0,0.0 L 5.0,0 L 5.0,13.0 L 0,18.0 L 0,13 L -0,0" Focusable="False" IsEnabled="True"/>
+                </ControlTemplate>
+
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--Range slider default style-->
+    <Style TargetType="{x:Type control:MarkerRange}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type control:MarkerRange}"  >
+
+                    <Canvas Name="PART_RangeSliderContainer" Height="18" ClipToBounds="false" >
+                        <UIElement.Effect>
+                            <DropShadowEffect ShadowDepth="2" BlurRadius="5"/>
+                        </UIElement.Effect>
+                        <Thumb Name="PART_LeftThumb" Cursor="SizeWE" Style="{StaticResource LeftRangeThumb}" Focusable="True" FocusManager.IsFocusScope="True" ToolTip="{Binding RelativeSource={RelativeSource AncestorType={x:Type control:MarkerRange}}, Path=ToolTip}" IsTabStop="false"/>
+                        <Thumb Name="PART_RightThumb" Cursor="SizeWE" Style="{StaticResource RightRangeThumb}" Focusable="True" FocusManager.IsFocusScope="True" ToolTip="{Binding RelativeSource={RelativeSource AncestorType={x:Type control:MarkerRange}}, Path=ToolTip}" IsTabStop="false"/>
+                        <Thumb Name="PART_MiddleThumb" Cursor="ScrollAll" Style="{StaticResource CenterRangeThumb}" Focusable="True" FocusManager.IsFocusScope="True" MinWidth="{Binding RelativeSource={RelativeSource AncestorType={x:Type control:MarkerRange}}, Path=MinRange}" ToolTip="{Binding RelativeSource={RelativeSource AncestorType={x:Type control:MarkerRange}}, Path=ToolTip}" IsTabStop="false">
+                            <i:Interaction.Behaviors>
+                                <adorners:ContentTemplateAdornerBehavior x:Name="PART_AdornerBehavior" AdornerTemplate="{StaticResource MarkerThumbEditor}" DelayConstruction="True" Placement="VerticalInnerHorizontalInner" AdornerMargin="-11 -82 0 0"/>
+                            </i:Interaction.Behaviors>
+                        </Thumb>
+                    </Canvas>
+
+                    <!-- Triggers to change the brush color of the thumb depending on the IsReadOnly property-->
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsFrozen}" Value="True">
+                            <Setter TargetName="PART_LeftThumb" Property="Cursor" Value="Arrow" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsFrozen}" Value="True">
+                            <Setter TargetName="PART_MiddleThumb" Property="Cursor" Value="Arrow" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsFrozen}" Value="True">
+                            <Setter TargetName="PART_RightThumb" Property="Cursor" Value="Arrow" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

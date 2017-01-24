@@ -1,0 +1,92 @@
+﻿<ResourceDictionary x:Class="MediaPlaybackLib.Themes.Arctic.MediaControlArctic" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush Color="#FFFFFF" x:Key="ContainerBackground"/>
+    <SolidColorBrush Color="#79b0c3" x:Key="ContainerBorderBrush"/>
+    <SolidColorBrush Color="#010101" x:Key="TextBrush"/>
+    <SolidColorBrush Color="LightGray" x:Key="DisabledGlyphBrush"/>
+    <LinearGradientBrush x:Key="GlyphBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Color="#295373" Offset="0.0" />
+        <GradientStop Color="#23455F" Offset="1" />
+    </LinearGradientBrush>
+    <SolidColorBrush Color="#FFFFFF" x:Key="ContentBackground"/>
+    <SolidColorBrush Color="#909090" x:Key="ContentBorderBrush"/>
+    <SolidColorBrush Color="#0092D1" x:Key="ValueTextBrush"/>
+
+    <!--*******************************-->
+    
+    
+    
+    <SolidColorBrush x:Key="SelectionSliderPathFill" Color="#FFC548" />
+    <SolidColorBrush x:Key="SelectionRegionSolidBrush" Color="#2Af0ffff" />
+    <SolidColorBrush x:Key="TimelineTickSolidBrush" Color="Gray" />
+    <SolidColorBrush x:Key="ProgressBarSolidBrush" Color="#FFA500" />
+    <SolidColorBrush x:Key="MediaMarkersSolidBrush" Color="#4169e1" />
+    <SolidColorBrush x:Key="MediaMarkersBackgroundSolidBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="MediaMarkersHighlightSolidBrush" Color="#FFFFB1C5" />
+    <SolidColorBrush x:Key="MediaMarkersReadOnlySolidBrush" Color="#FF7b68ee" />
+    <SolidColorBrush x:Key="MediaMarkersRangeBrush" Color="#FFB0E0E6" />
+    <SolidColorBrush x:Key="MediaMarkersRangeReadOnlyBrush" Color="#FF7B68EE" />
+
+    <SolidColorBrush x:Key="MediaElementForegroundBrush" Color="#61C5E9" />
+    <SolidColorBrush x:Key="MediaElementBackgroundBrush" Color="#212121" />
+    <SolidColorBrush x:Key="MinimzizedAudioBrush" Color="#AFAFAF" />
+
+    <SolidColorBrush x:Key="MediaHighlightBrush" Color="#FF4788c8" />
+
+    <Style x:Key="MediaShadowStyle">
+        <Setter Property="Control.Foreground" Value="LightGray" />
+    </Style>
+
+    <Style x:Key="MediaButtonStyle" TargetType="ButtonBase">
+        <Setter Property="Focusable" Value="false"/>
+        <Setter Property="IsTabStop" Value="false"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="FontFamily" Value="Verdana" />
+        <Setter Property="FontSize" Value="11px" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="BorderBrush" Value="DarkGray"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="2"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Margin" Value="0.5"/>
+        <Setter Property="Background">
+            <Setter.Value>
+                <SolidColorBrush Color="Transparent" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ButtonBase">
+                    <Border Name="border" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="3" Background="{TemplateBinding Background}">
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" Value="#E0E0E0"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="#C8C8C8"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource DisabledGlyphBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MediaToggleButton" TargetType="ToggleButton" BasedOn="{StaticResource MediaButtonStyle}">
+        <Style.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsChecked" Value="True"/>
+                    <Condition Property="IsMouseOver" Value="False"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="#C8C8C8"/>
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>
