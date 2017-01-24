@@ -32,6 +32,8 @@ Media source is the class that allows specifying multiple media segments. Each m
 * **MediaPlaybackControl** - is a visual control that adds player buttons and support for media tags. It is essentially a visual presentation control for **MediaPlaybackElement**
 * **MediaTimescalePresenter** - visaul control that knows how to display timeline: hours, minutes or seconds, depending on the media duration
 
+Notice hashed/darken area in the media timeline. It indicates time gaps between media segments. Player automatically skips this sections during playback. Also you can niether move to this position nor place a tag there.
+
 #### Playback loop
 ![Alt text](/../snapshots/loop.png?raw=true "Playback loop")
 
