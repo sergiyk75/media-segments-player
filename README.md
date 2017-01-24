@@ -3,6 +3,8 @@
 Originally this experimental project was conceived to implement multi-segment audio file playback.
 Other features like themes, time tags, section tags and system(readonly) tags were added later.
 
+This project is implemented using Microsoft Windows Presentation Framework or WPF.
+
 Media source is the class that allows specifying multiple media segments. Each media segment has following properties: uri, offset and duration. Media segment uri can be a local file as well as a http url.
 
 ```csharp
