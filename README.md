@@ -29,7 +29,7 @@ Media source is the class that allows specifying multiple media segments. Each m
 * **ProgressIndicator** - a pretty neat visual control that shows an animated wheel
 * **NotifyObject** - a super cool class. It simplifies MVVM binding a lot
 * **MediaPlaybackElement** - is the meat of this project. All segment media playback code is here
-* **MediaPlaybackControl** - is a visual control that adds player buttons and support for media tags.
+* **MediaPlaybackControl** - is a visual control that adds player buttons and support for media tags. It is essentially a visual presentation control for **MediaPlaybackElement**
 * **MediaTimescalePresenter** - visaul control that knows how to display timeline: hours, minutes or seconds, depending on the media duration
 
 #### Playback loop
