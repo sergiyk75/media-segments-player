@@ -33,13 +33,13 @@ Media source is the class that allows specifying multiple media segments. Each m
 * **MediaTimescalePresenter** - visaul control that knows how to display timeline: hours, minutes or seconds, depending on the media duration
 
 #### Playback loop
-![Alt text](/../images/loop.png?raw=true "Playback loop")
+![Alt text](/../snapshots/loop.png?raw=true "Playback loop")
 
 #### Time tags
-![Alt text](/../images/time-tag.png?raw=true "Time Tags")
+![Alt text](/../snapshots/time-tag.png?raw=true "Time Tags")
 
 #### Section tags
-![Alt text](/../images/section-tag.png?raw=true "Section Tags")
+![Alt text](/../snapshots/section-tag.png?raw=true "Section Tags")
 
 #### System(Readonly) Tags
-![Alt text](/../images/system-tags.png?raw=true "System(Readonly) Tags")
+![Alt text](/../snapshots/system-tags.png?raw=true "System(Readonly) Tags")
