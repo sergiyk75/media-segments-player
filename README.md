@@ -24,7 +24,7 @@ Media source is the class that allows specifying multiple media segments. Each m
     
 ```
 
-### Cool stuff
+### The Cool Stuff
 
 * **ProgressIndicator** - a pretty neat visual control that shows an animated wheel
 * **NotifyObject** - a super cool class. It simplifies MVVM binding a lot
